@@ -1,0 +1,19 @@
+#!/bin/bash
+set -euo pipefail
+
+APP_DIR="/opt/openmower-cli"
+
+case "$1" in
+    purge|remove)
+        # Remove the venv and any runtime artifacts
+        rm -rf "${APP_DIR}/.venv"
+        rm -rf "${APP_DIR}/__pycache__"
+
+        # Remove the app dir if empty
+        rmdir "${APP_DIR}" 2>/dev/null || true
+
+        systemctl daemon-reload
+        ;;
+esac
+
+exit 0
